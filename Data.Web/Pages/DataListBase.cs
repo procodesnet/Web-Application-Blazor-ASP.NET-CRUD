@@ -7,14 +7,14 @@ namespace Data.Web.Pages
     {
         public IEnumerable<Record> Records { get; set; }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            LoadRecords();
-            return base.OnInitializedAsync();
+            await Task.Run(LoadRecords);
         }
 
         private void LoadRecords()
         {
+            System.Threading.Thread.Sleep(1000);
             Record r1 = new Record
             {
                 Id = 1,
