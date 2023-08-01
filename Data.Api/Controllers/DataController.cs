@@ -1,4 +1,5 @@
 ﻿using Data.Api.Models;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Data.Api.Controllers
@@ -20,6 +21,24 @@ namespace Data.Api.Controllers
 			try
 			{
 				return Ok(await dataRepository.GetRecords());
+			}
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database.");
+			}
+		}
+
+		[HttpGet("{id:int}")]
+		public async Task<ActionResult<Record>> GetRecord(int id)
+		{
+			try
+			{
+				var result = await dataRepository.GetRecord(id);
+				if(result == null)
+				{
+					return NotFound();
+				}
+				return result;
 			}
 			catch (Exception)
 			{
