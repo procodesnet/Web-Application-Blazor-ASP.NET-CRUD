@@ -45,5 +45,25 @@ namespace Data.Api.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database.");
 			}
 		}
+
+		[HttpPost]
+		public async Task<ActionResult<Record>> CreateRecord(Record record)
+		{
+			try
+			{
+				if (record == null)
+				{
+					return BadRequest();
+				}
+
+				var createdRecord = await dataRepository.AddRecord(record);
+
+				return CreatedAtAction(nameof(GetRecord), new { id = createdRecord.Id }, createdRecord);
+			}
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database.");
+			}
+		}
 	}
 }
