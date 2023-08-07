@@ -10,6 +10,7 @@ namespace Data.Api.Models
 	{
 		Task<IEnumerable<Record>> GetRecords();
 		Task<Record> GetRecord(int id);
+		Task<Record> GetRecordByField(string field);
 		Task<Record> AddRecord(Record record);
 		Task<Record> UpdateRecord(Record record);
 		void DeleteRecord(int id);

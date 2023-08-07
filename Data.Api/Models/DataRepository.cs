@@ -26,6 +26,11 @@ namespace Data.Api.Models
 			return await appDbContext.Records.FirstOrDefaultAsync(e =>  e.Id == id);
 		}
 
+		public async Task<Record> GetRecordByField(string field)
+		{
+			return await appDbContext.Records.FirstOrDefaultAsync(e => e.Field == field);
+		}
+
 		public async Task<Record> AddRecord(Record record)
 		{
 			var result = await appDbContext.Records.AddAsync(record);

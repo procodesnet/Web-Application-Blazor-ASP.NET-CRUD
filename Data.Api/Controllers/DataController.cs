@@ -56,6 +56,15 @@ namespace Data.Api.Controllers
 					return BadRequest();
 				}
 
+				var dat = dataRepository.GetRecordByField(record.Field);
+
+				// debug dat == null
+				if (dat != null)
+				{
+					ModelState.AddModelError("field", "Record field already in use.");
+					return BadRequest(ModelState);
+				}
+
 				var createdRecord = await dataRepository.AddRecord(record);
 
 				return CreatedAtAction(nameof(GetRecord), new { id = createdRecord.Id }, createdRecord);
