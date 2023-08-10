@@ -74,5 +74,30 @@ namespace Data.Api.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database.");
 			}
 		}
+
+		[HttpPut("{id:int}")]
+		public async Task<ActionResult<Record>> UpdateRecord(int  id, Record record)
+		{
+			try
+			{
+				if(id != record.Id)
+				{
+					return BadRequest("Record id mismatch.");
+				}
+
+				var recordToUpdate = await dataRepository.GetRecord(id);
+
+				if (recordToUpdate == null)
+				{
+					return NotFound("Record with id = {id} not found.");
+				}
+
+				return await dataRepository.UpdateRecord(record);
+			}
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data.");
+			}
+		}
 	}
 }
