@@ -13,6 +13,6 @@ namespace Data.Api.Models
 		Task<Record> GetRecordByField(string field);
 		Task<Record> AddRecord(Record record);
 		Task<Record> UpdateRecord(Record record);
-		void DeleteRecord(int id);
+		Task<Record> DeleteRecord(int id);
 	}
 }

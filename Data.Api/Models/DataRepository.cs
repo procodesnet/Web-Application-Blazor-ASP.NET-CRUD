@@ -54,14 +54,18 @@ namespace Data.Api.Models
 			return null;
 		}
 
-		public async void DeleteRecord(int id)
+		public async Task<Record> DeleteRecord(int id)
 		{
 			var result = await appDbContext.Records.FirstOrDefaultAsync(e => e.Id == id);
+
 			if (result != null)
 			{
 				appDbContext.Records.Remove(result);
 				await appDbContext.SaveChangesAsync();
+				return result;
 			}
+
+			return null;
 		}
 	}
 }

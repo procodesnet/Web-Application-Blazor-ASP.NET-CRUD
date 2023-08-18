@@ -76,7 +76,7 @@ namespace Data.Api.Controllers
 		}
 
 		[HttpPut("{id:int}")]
-		public async Task<ActionResult<Record>> UpdateRecord(int  id, Record record)
+		public async Task<ActionResult<Record>> UpdateRecord(int id, Record record)
 		{
 			try
 			{
@@ -97,6 +97,25 @@ namespace Data.Api.Controllers
 			catch (Exception)
 			{
 				return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data.");
+			}
+		}
+		[HttpDelete("{id:int}")]
+		public async Task<ActionResult<Record>> DeleteRecord(int id)
+		{
+			try
+			{
+				var recordToDelete = await dataRepository.GetRecord(id);
+
+				if (recordToDelete == null)
+				{
+					return NotFound("Record with id = {id} not found.");
+				}
+
+				return await dataRepository.DeleteRecord(id);
+			}
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data.");
 			}
 		}
 	}
