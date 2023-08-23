@@ -8,6 +8,7 @@ namespace Data.Api.Models
 {
 	public interface IDataRepository
 	{
+		Task<IEnumerable<Record>> Search(string keyword);
 		Task<IEnumerable<Record>> GetRecords();
 		Task<Record> GetRecord(int id);
 		Task<Record> GetRecordByField(string field);

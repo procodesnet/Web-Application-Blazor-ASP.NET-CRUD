@@ -15,6 +15,27 @@ namespace Data.Api.Controllers
 			this.dataRepository = dataRepository;
 		}
 
+		[HttpGet("{search}")]
+		public async Task<ActionResult<IEnumerable<Record>>> Search(string keyword)
+		{
+			try
+			{
+				var result = await dataRepository.Search(keyword);
+
+				if (result.Any())
+				{
+					return Ok(result);
+				}
+
+				return NotFound();
+			}
+			catch (Exception)
+			{
+
+				return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from the database.");
+			}
+		}
+
 		[HttpGet]
 		public async Task<ActionResult> GetRecords()
 		{

@@ -38,6 +38,18 @@ namespace Data.Api.Models
 			return result.Entity;
 		}
 
+		public async Task<IEnumerable<Record>> Search(string keyword)
+		{
+			IQueryable<Record> query = appDbContext.Records;
+
+			if (!string.IsNullOrEmpty(keyword))
+			{
+				query = query.Where(e => e.Field.Contains(keyword));
+			}
+
+			return await query.ToListAsync();
+		}
+
 		public async Task<Record> UpdateRecord(Record record)
 		{
 			var result = await appDbContext.Records.FirstOrDefaultAsync(e => e.Id ==  record.Id);
